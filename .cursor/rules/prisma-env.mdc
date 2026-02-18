@@ -1,0 +1,14 @@
+---
+description: Prisma schema location, DATABASE_URL vs DIRECT_URL, migrations
+globs: prisma/**/*
+alwaysApply: false
+---
+
+# Prisma Conventions
+
+- **Schema**: All models live in `prisma/schema.prisma`. Do not split schema across files.
+- **Connections**:
+  - `DATABASE_URL`: used at runtime; use Supabase connection pooling (e.g. `?pgbouncer=true`) when available.
+  - `DIRECT_URL`: used for migrations and introspection; direct Postgres connection without pooler.
+- **New models**: Add the model to `prisma/schema.prisma`, then run `npx prisma migrate dev --name <description>` (or `prisma db push` for prototyping). Never skip migrations when changing schema.
+- **Client**: Use the generated `PrismaClient` via `PrismaService` (inject in domain services); run `npx prisma generate` after schema changes.

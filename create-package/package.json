@@ -1,0 +1,23 @@
+{
+  "name": "create-nestjs-inspire-template",
+  "version": "1.0.0",
+  "description": "Scaffold a new NestJS backend from the Inspire template (Prisma, domain-oriented structure, crypto)",
+  "main": "index.js",
+  "bin": {
+    "create-nestjs-inspire-template": "./index.js"
+  },
+  "scripts": {},
+  "keywords": [
+    "nestjs",
+    "template",
+    "scaffold",
+    "prisma",
+    "create-app"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "degit": "^2.8.4",
+    "cross-spawn": "^7.0.3"
+  }
+}

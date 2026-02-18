@@ -1,0 +1,52 @@
+---
+description: NestJS file organization by domain, crypto for sensitive data, Prisma integration
+alwaysApply: true
+---
+
+# NestJS File Organization
+
+Files must be organized **by models / business logic** in this project.
+
+## Structure
+
+- Group code into **domain modules** (e.g. `users/`, `transactions/`, `wallets/`)
+- Each domain module contains its own: `controller`, `service`, `dto`, `entity`/`schema`
+- Avoid organizing purely by technical type (e.g. a flat `controllers/`, `services/` folder)
+
+## Example
+
+```
+src/
+  users/
+    users.module.ts
+    users.controller.ts
+    users.service.ts
+    dto/
+    entities/
+  transactions/
+    transactions.module.ts
+    transactions.controller.ts
+    transactions.service.ts
+    dto/
+  wallets/
+    wallets.module.ts
+    ...
+```
+
+## Crypto for Sensitive Data
+
+- **Every added module or model** must use **crypto** to encrypt sensitive data when needed (e.g. PII, tokens, secrets).
+- Prefer the project's shared crypto utilities (`src/crypto/crypto.service.ts`) or NestJS crypto patterns; avoid storing plaintext where encryption is required.
+- Apply encryption at rest and in transit as appropriate for the domain (e.g. wallets, credentials, audit logs).
+
+## Prisma Integration
+
+- When **adding a new module or model**, **Prisma must be updated or deployed**:
+  - Add or update the corresponding **schema** in `prisma/schema.prisma`.
+  - Run **migrations** (`npx prisma migrate dev` or equivalent) and ensure they are applied in deployment.
+  - Use Prisma client in the module's service/repository layer; do not bypass Prisma for the new model's data access.
+- Keep the Prisma schema and migrations in sync with new entities so the database stays deployable and consistent.
+
+## Rationale
+
+Organizing by business logic keeps related code together, improves discoverability, and scales better as the application grows. Crypto and Prisma requirements ensure new features are secure and correctly persisted.

@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// Key-value store for app secrets (e.g. ENCRYPTION_MASTER_KEY, JWT_SECRET).
+/// Production keys should be injected via env or secrets service; this table
+/// supports rotation metadata and optional encrypted values for admin features.
+model KeyStore {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  valueHash String?  // optional hash/non-sensitive identifier; never store raw secrets here in production
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
