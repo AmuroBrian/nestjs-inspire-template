@@ -13,7 +13,7 @@ const fs = require('fs');
 const { spawnSync } = require('child_process');
 const degit = require('degit');
 
-const TEMPLATE_REPO = 'inspire-softwaredev/nestjs-inspire-template';
+const TEMPLATE_REPO = 'AmuroBrian/nestjs-inspire-template';
 
 const projectName = process.argv[2];
 const cwd = process.cwd();
